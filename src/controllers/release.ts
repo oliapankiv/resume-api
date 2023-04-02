@@ -11,20 +11,21 @@ const algorithm: HmacImportParams = { name: 'hmac', hash: 'sha-256' }
 const key = await crypto.subtle.importKey('raw', encodr.encode(secret), algorithm, false, ['sign']);
 
 const validator: Middleware = async (ctx, next) => {
-  const payload = await ctx.request.body({ type: 'json' }).value
+  const payload = await ctx.request.body({ type: 'json', limit: 64 * 1024 }).value
   if (!payload) return ctx.throw(Status.BadRequest, 'missing payload')
 
-  console.log(payload)
+  if (payload.action !== 'released') return  ctx.response.status = Status.Continue
 
   const signature = ctx.request.headers.get('x-hub-signature-256')
   if (!signature) return ctx.throw(Status.BadRequest, 'missing signature')
 
-  console.log(signature)
-
   const checksum = await crypto.subtle.sign(algorithm.name, key, encodr.encode(JSON.stringify(payload)))
-  const dataView = new DataView(checksum)
+  const hex = [...new Uint8Array(checksum)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
 
-  return encodr.encode(signature.slice(7)).every((a, index) => a === dataView.getUint8(index)) ? next() : ctx.throw(Status.Unauthorized, 'signature mismatch')
+  console.log('github:', signature.slice(7))
+  console.log('mine:', hex)
+
+  return signature.slice(7) === hex ? next() : ctx.throw(Status.Unauthorized, 'signature mismatch')
 }
 
 const handler: Middleware = async (ctx) => {
