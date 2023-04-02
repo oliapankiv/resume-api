@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>résumé</title>
+
+  <style>
+    body { margin: 0; color: black; background-color: #aaa; }
+
+    @media (prefers-color-scheme: dark) {
+      body { color: white; background-color: #101010; }
+    }
+
+    body > * { display: none; }
+    body > .loader { display: block; }
+
+    .loader { top: 50%; left: 50%; width: 80px; height: 80px; position: absolute; margin: -40px -40px; }
+    .loader div { top: 33px; width: 13px; height: 13px; border-radius: 50%; position: absolute; background: currentColor; animation-timing-function: cubic-bezier(0, 1, 1, 0); }
+
+    .loader div:nth-child(1) { left: 8px; animation: loader-ell1 0.6s infinite; }
+    .loader div:nth-child(2) { left: 8px; animation: loader-ell2 0.6s infinite; }
+    .loader div:nth-child(3) { left: 32px; animation: loader-ell2 0.6s infinite; }
+    .loader div:nth-child(4) { left: 56px; animation: loader-ell3 0.6s infinite; }
+
+    @keyframes loader-ell1 { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    @keyframes loader-ell2 { 0% { transform: translate(0, 0); } 100% { transform: translate(24px, 0); } }
+    @keyframes loader-ell3 { 0% { transform: scale(1); } 100% { transform: scale(0); } }
+  </style>
+
+  <script src="https://www.google.com/recaptcha/api.js?render=<!--captcha-->"></script>
+
+  <script defer>
+    grecaptcha.ready(() => grecaptcha.execute('<!--captcha-->', { action: 'resume' }).then((token) => {
+      document.querySelector('input[name=token]').value = token
+      document.querySelector('form').submit()
+    }))
+  </script>
+</head>
+
+<body>
+  <div class="loader"><div></div><div></div><div></div><div></div></div>
+
+  <form method="post" action="/">
+    <input type="hidden" name="token" />
+  </form>
+</body>
+</html>

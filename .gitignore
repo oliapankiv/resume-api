@@ -1,0 +1,6 @@
+.vscode
+dist
+
+.env
+.todo
+ecosystem.config.js
