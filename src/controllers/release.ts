@@ -3,7 +3,7 @@ import { Middleware, Status } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
 
 import { useResume } from '~/services/mod.ts'
 
-const secret = Deno.env.get('GITHUB')
+const secret = Deno.env.get('WEBHOOK')
 if (!secret) throw new Error('no secret defined')
 
 const encodr = new TextEncoder()
@@ -21,9 +21,6 @@ const validator: Middleware = async (ctx, next) => {
 
   const checksum = await crypto.subtle.sign(algorithm.name, key, encodr.encode(JSON.stringify(payload)))
   const hex = [...new Uint8Array(checksum)].map((byte) => byte.toString(16).padStart(2, '0')).join('')
-
-  console.log('github:', signature.slice(7))
-  console.log('mine:', hex)
 
   return signature.slice(7) === hex ? next() : ctx.throw(Status.Unauthorized, 'signature mismatch')
 }
