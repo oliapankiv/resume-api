@@ -14,7 +14,7 @@ const validator: Middleware = async (ctx, next) => {
   const payload = await ctx.request.body({ type: 'json', limit: 64 * 1024 }).value
   if (!payload) return ctx.throw(Status.BadRequest, 'missing payload')
 
-  if (payload.action !== 'released') return  ctx.response.status = Status.Continue
+  if (payload.action !== 'released') return ctx.response.status = Status.OK
 
   const signature = ctx.request.headers.get('x-hub-signature-256')
   if (!signature) return ctx.throw(Status.BadRequest, 'missing signature')
