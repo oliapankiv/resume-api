@@ -14,13 +14,45 @@
 
     .grecaptcha-badge { visibility: hidden; }
 
-    .loader { top: 50%; left: 50%; width: 80px; height: 80px; position: absolute; margin: -40px -40px; }
+    .loader { top: 50%; left: 50%; width: 80px; height: 80px; position: absolute; margin: -40px -40px; transition: opacity 200ms ease-out; }
     .loader div { top: 33px; width: 13px; height: 13px; border-radius: 50%; position: absolute; background: currentColor; animation-timing-function: cubic-bezier(0, 1, 1, 0); }
 
     .loader div:nth-child(1) { left: 8px; animation: loader-ell1 0.6s infinite; }
     .loader div:nth-child(2) { left: 8px; animation: loader-ell2 0.6s infinite; }
     .loader div:nth-child(3) { left: 32px; animation: loader-ell2 0.6s infinite; }
     .loader div:nth-child(4) { left: 56px; animation: loader-ell3 0.6s infinite; }
+
+    .checkmark {
+      top: 50%;
+      position: absolute;
+      left: calc(50% - var(--size) * 0.25);
+
+      --size: 512px;
+      --thickness: 8px;
+      --height: calc(var(--size) / 2);
+      --width: calc(var(--height) / 2);
+    }
+
+    .checkmark:after {
+      content: '';
+      position: absolute;
+      width: var(--width);
+      height: var(--height);
+      animation-name: checkmark;
+      animation-duration: 1440ms;
+      transform-origin: left top;
+      animation-timing-function: ease;
+      transform: scaleX(-1) rotate(135deg);
+      border-top: var(--thickness) solid currentColor;
+      border-right: var(--thickness) solid currentColor;
+    }
+
+    @keyframes checkmark {
+      0% { height: 0; width: 0; opacity: 1; }
+      20% { height: 0; width: var(--width); opacity: 1; }
+      40% { height: var(--height); width: var(--width); opacity: 1; }
+      100% { height: var(--height); width: var(--width); opacity: 1; }
+    }
 
     @keyframes loader-ell1 { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     @keyframes loader-ell2 { 0% { transform: translate(0, 0); } 100% { transform: translate(24px, 0); } }
@@ -30,14 +62,23 @@
   <script src="https://www.google.com/recaptcha/api.js?render=<!--captcha-->"></script>
 
   <script defer>
-    grecaptcha.ready(() => grecaptcha.execute('<!--captcha-->', { action: 'resume' }).then((token) => {
+    const delay = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms))
+
+    grecaptcha.ready(() => grecaptcha.execute('<!--captcha-->', { action: 'resume' }).then(async (token) => {
+      document.querySelector('.loader').style = 'opacity: 0'
       document.querySelector('input[name=token]').value = token
+
+      await delay(192)
+      document.querySelector('.checkmark').style = ''
+
+      await delay(512)
       document.querySelector('form').submit()
     }))
   </script>
 </head>
 
 <body>
+  <div class="checkmark" style="display: none"></div>
   <div class="loader"><div></div><div></div><div></div><div></div></div>
 
   <form method="post" action="/">

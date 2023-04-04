@@ -5,7 +5,7 @@ if (!github) throw new Error('no github token defined')
 
 const base = 'https://api.github.com/repos/dasph/resume/releases'
 
-const accept= 'application/octet-stream'
+const accept = 'application/octet-stream'
 const authorization = `Bearer ${github}`
 
 const context = { resume: undefined as Resume | undefined }
