@@ -64,7 +64,9 @@
   <script defer>
     const delay = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms))
 
-    grecaptcha.ready(() => grecaptcha.execute('<!--captcha-->', { action: 'resume' }).then(async (token) => {
+    grecaptcha.ready(async () => {
+      const token = await grecaptcha.execute('<!--captcha-->', { action: 'resume' })
+
       document.querySelector('.loader').style = 'opacity: 0'
       document.querySelector('input[name=token]').value = token
 
@@ -73,7 +75,7 @@
 
       await delay(512)
       document.querySelector('form').submit()
-    }))
+    })
   </script>
 </head>
 
