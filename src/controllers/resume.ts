@@ -1,7 +1,7 @@
 import { Middleware, Status } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
 
 import { useResume } from '~/services/mod.ts'
-import { CaptchaResponse } from '~/types/mod.ts'
+import { CaptchaResponse, Constants } from '~/types/mod.ts'
 
 const captcha = `${Deno.env.get('CAPTCHA_PRIVATE')}`
 
@@ -27,6 +27,7 @@ const handler: Middleware = ({ response }) => {
    resume?.tag && response.headers.append('x-tag', resume.tag)
    resume?.publishedAt && response.headers.append('x-published-at', resume.publishedAt)
 
+   response.headers.append('Content-Disposition',`inline; filename="${Constants.RESUME_FILE_NAME}"`)
    response.body = resume?.blob
 }
 
