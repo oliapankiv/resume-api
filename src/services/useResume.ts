@@ -1,3 +1,5 @@
+import { crypto } from 'https://deno.land/std@0.182.0/crypto/mod.ts'
+
 import { Resume, Release } from '~/types/mod.ts'
 
 const github = Deno.env.get('GITHUB')
@@ -21,9 +23,14 @@ const fetchAsset = async (id: number): Promise<Blob> => {
 const fetchLatestResume = async (): Promise<Resume> => {
   const { assets: [{ id }], tag_name: tag, published_at: publishedAt } = await fetchLatestRelease()
 
+  const blob = await fetchAsset(id)
+
+  const buffer = await crypto.subtle.digest('SHA-256', await blob.arrayBuffer())
+  const hash = btoa(String.fromCharCode(...new Uint8Array(buffer))).slice(0, 32)
+
   console.log(`✅ fetched latest [v${tag}, published on: ${new Date(publishedAt).toUTCString()}] resume | ${new Date().toUTCString()}`)
 
-  return context.resume = { id, tag, publishedAt, blob: await fetchAsset(id) }
+  return context.resume = { id, tag, publishedAt, hash, blob }
 }
 
 await fetchLatestResume();
