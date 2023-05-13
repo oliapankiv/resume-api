@@ -21,11 +21,11 @@ const validator: Middleware = async (ctx, next) => {
    return next()
 }
 
-const handler: Middleware = ({ response, request }) => {
+const handler: Middleware = ({ response }) => {
    const { context: { resume } } = useResume()
 
    resume?.tag && response.headers.append('x-tag', resume.tag)
-   resume?.hash && response.headers.append('etag', `W/"${resume.hash}"`)
+   // resume?.hash && response.headers.append('etag', `W/"${resume.hash}"`)
    resume?.publishedAt && response.headers.append('x-published-at', resume.publishedAt)
 
    response.headers.append('content-disposition', `inline; filename="${Constants.RESUME_FILE_NAME}"`)
