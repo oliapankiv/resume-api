@@ -1,3 +1,5 @@
-import { Middleware, Status } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Middleware } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
 
-export const favicon: Middleware = ({ response }) => (response.status = Status.OK);
+const body = Deno.readFileSync('./src/assets/favicon.ico')
+
+export const favicon: Middleware = ({ response }) => (response.body = body);
