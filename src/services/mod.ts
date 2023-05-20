@@ -1,2 +1,2 @@
-export * from './useResume.ts'
-export * from './useWebhook.ts'
+export * from '~/services/useResume.ts'
+export * from '~/services/useWebhook.ts'
