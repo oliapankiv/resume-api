@@ -1,4 +1,4 @@
-import { Middleware, Status } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Middleware, Status } from 'oak'
 
 import { useResume } from '~/services/mod.ts'
 import { CaptchaResponse, Constants } from '~/types/mod.ts'

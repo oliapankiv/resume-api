@@ -1,4 +1,4 @@
-import { Middleware, HttpError } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Middleware, HttpError } from 'oak'
 
 export class ApiError extends Error {
   constructor (message: string) { super(message) }

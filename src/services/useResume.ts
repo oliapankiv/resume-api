@@ -1,4 +1,4 @@
-import { crypto } from 'https://deno.land/std@0.182.0/crypto/mod.ts'
+import { crypto } from 'crypto'
 
 import { Resume, Release } from '~/types/mod.ts'
 

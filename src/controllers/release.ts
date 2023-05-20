@@ -1,4 +1,4 @@
-import { Middleware, Status } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Middleware, Status } from 'oak'
 
 import { useResume, useWebhook } from '~/services/mod.ts'
 

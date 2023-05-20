@@ -1,4 +1,4 @@
-import { Router } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Router } from 'oak'
 
 import { errorHandler } from '~/middleware/mod.ts'
 import { favicon, index, resume, release } from '~/controllers/mod.ts'

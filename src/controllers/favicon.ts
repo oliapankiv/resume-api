@@ -1,4 +1,4 @@
-import { Middleware } from 'https://deno.land/x/oak@v12.1.0/mod.ts'
+import { Middleware } from 'oak'
 
 const body = Deno.readFileSync('./src/assets/favicon.ico')
 
