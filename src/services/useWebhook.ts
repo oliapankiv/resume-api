@@ -1,3 +1,5 @@
+import { crypto } from 'crypto'
+
 const secret = Deno.env.get('WEBHOOK')
 if (!secret) throw new Error('no secret defined')
 
