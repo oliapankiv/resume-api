@@ -36,7 +36,7 @@ jobs:
         IMAGE=${{ vars.LOCATION }}-docker.pkg.dev/${{ vars.PROJECT }}/${{ vars.REPOSITORY }}/${{ vars.SERVICE }}:${{ github.sha }}
         docker build -t $IMAGE
           --build-arg GITHUB=${{ secrets.GITHUB }} \
-          --build-arg WEBHOOK=${{ secrets.WEBHOOK }} \
+          --build-arg WEBHOOK="${{ secrets.WEBHOOK }}" \
           --build-arg CAPTCHA_PUBLIC=${{ secrets.CAPTCHA_PUBLIC }} \
           --build-arg CAPTCHA_PRIVATE=${{ secrets.CAPTCHA_PRIVATE }} ./
         docker push $IMAGE
