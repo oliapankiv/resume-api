@@ -13,7 +13,7 @@ const validator: Middleware = async (ctx, next) => {
   const signature = ctx.request.headers.get('x-hub-signature-256')
   if (!signature) return ctx.throw(Status.BadRequest, 'missing signature')
 
-  const isValid = await verify(signature, payload)
+  const isValid = await verify(signature.slice(7), payload)
 
   return isValid ? next() : ctx.throw(Status.Unauthorized, 'signature mismatch')
 }
