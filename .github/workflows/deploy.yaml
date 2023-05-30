@@ -37,12 +37,14 @@ jobs:
 
     - name: Build and Push Container 🏗️
       run: |-
-        IMAGE=${{ vars.LOCATION }}-docker.pkg.dev/${{ vars.PROJECT }}/${{ vars.REPOSITORY }}/${{ vars.SERVICE }}:${{ github.sha }}
+        REPO=${{ vars.LOCATION }}-docker.pkg.dev/${{ vars.PROJECT }}/${{ vars.REPOSITORY }}/${{ vars.SERVICE }}
+        IMAGE=$REPO:${{ github.sha }}
         docker build -t $IMAGE \
           --build-arg GITHUB=${{ secrets.GITHUB }} \
           --build-arg WEBHOOK=${{ secrets.WEBHOOK }} \
           --build-arg CAPTCHA_PUBLIC=${{ secrets.CAPTCHA_PUBLIC }} \
           --build-arg CAPTCHA_PRIVATE=${{ secrets.CAPTCHA_PRIVATE }} ./
+        docker tag $IMAGE $REPO:latest
         docker push $IMAGE
 
     - name: Cleanup Google Artifact Registry 🧹
