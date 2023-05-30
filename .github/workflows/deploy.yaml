@@ -45,7 +45,7 @@ jobs:
           --build-arg CAPTCHA_PUBLIC=${{ secrets.CAPTCHA_PUBLIC }} \
           --build-arg CAPTCHA_PRIVATE=${{ secrets.CAPTCHA_PRIVATE }} ./
         docker tag $IMAGE $REPO:latest
-        docker push $IMAGE
+        docker push $REPO:latest
 
     - name: Cleanup Google Artifact Registry 🧹
       run: |-
