@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
     name: Deploy
@@ -14,10 +18,6 @@ jobs:
     permissions:
       contents: 'read'
       id-token: 'write'
-
-    concurrency:
-      group: ${{ github.head_ref }}
-      cancel-in-progress: true
 
     steps:
     - name: Checkout 🛎️
