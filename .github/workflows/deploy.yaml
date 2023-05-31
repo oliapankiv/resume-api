@@ -47,6 +47,10 @@ jobs:
         docker tag $IMAGE $REPO:latest
         docker push $REPO:latest
 
+    - name: Deploy 🚀
+      run: |-
+        curl ${{ secrets.CD_URL }}/${{ vars.SERVICE }} -H 'authorization: ${{ secrets.CD_AUTHORIZATION }}'
+
     - name: Cleanup Google Artifact Registry 🧹
       run: |-
         SERVICE=${{ vars.LOCATION }}-docker.pkg.dev/${{ vars.PROJECT }}/${{ vars.REPOSITORY }}/${{ vars.SERVICE }}
