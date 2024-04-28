@@ -28,6 +28,7 @@ const handler: Middleware = ({ response }) => {
    // resume?.hash && response.headers.append('etag', `W/"${resume.hash}"`)
    resume?.publishedAt && response.headers.append('x-published-at', resume.publishedAt)
 
+   response.headers.append('content-type', 'application/pdf')
    response.headers.append('content-disposition', `inline; filename="${Constants.RESUME_FILE_NAME}"`)
 
    response.body = resume?.blob
