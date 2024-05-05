@@ -12,11 +12,11 @@ const authorization = `Bearer ${github}`
 
 const context = { resume: undefined as Resume | undefined }
 
-const fetchLatestRelease = async (): Promise<Release> => {
+const fetchLatestRelease = (): Promise<Release> => {
   return fetch(`${base}/latest`, { headers: { authorization } }).then((res) => res.json())
 }
 
-const fetchAsset = async (id: number): Promise<Blob> => {
+const fetchAsset = (id: number): Promise<Blob> => {
   return fetch(`${base}/assets/${id}`, { headers: { accept, authorization } }).then((res) => res.blob())
 }
 

@@ -15,8 +15,6 @@
       body { color: white; background-color: #101010; }
     }
 
-    .grecaptcha-badge { visibility: hidden; }
-
     .loader { top: 50%; left: 50%; width: 80px; height: 80px; position: absolute; margin: -40px -40px; transition: opacity 200ms ease-out; }
     .loader div { top: 33px; width: 13px; height: 13px; border-radius: 50%; position: absolute; background: currentColor; animation-timing-function: cubic-bezier(0, 1, 1, 0); }
 
@@ -62,23 +60,20 @@
     @keyframes loader-ell3 { 0% { transform: scale(1); } 100% { transform: scale(0); } }
   </style>
 
-  <script src="https://www.google.com/recaptcha/api.js?render=<!--captcha-->"></script>
+  <script defer src="https://challenges.cloudflare.com/turnstile/v0/api.js"></script>
 
-  <script defer>
+  <script>
     const delay = (ms = 0) => new Promise((resolve) => setTimeout(resolve, ms))
 
-    grecaptcha.ready(async () => {
-      const token = await grecaptcha.execute('<!--captcha-->', { action: 'resume' })
-
+    window.submit = async () => {
       document.querySelector('.loader').style = 'opacity: 0'
-      document.querySelector('input[name=token]').value = token
 
       await delay(192)
       document.querySelector('.checkmark').style = ''
 
       await delay(512)
       document.querySelector('form').submit()
-    })
+    }
   </script>
 </head>
 
@@ -87,7 +82,7 @@
   <div class="loader"><div></div><div></div><div></div><div></div></div>
 
   <form method="post" action="/">
-    <input type="hidden" name="token" />
+    <div class="cf-turnstile" data-sitekey="<!--turnstile-->" data-response-field-name="token" data-callback="submit" data-action="cv" />
   </form>
 </body>
 </html>

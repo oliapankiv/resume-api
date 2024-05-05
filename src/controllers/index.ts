@@ -1,7 +1,7 @@
 import { Middleware } from 'oak'
 
-const captcha = `${Deno.env.get('CAPTCHA_PUBLIC')}`
+const turnstile = `${Deno.env.get('TURNSTILE_PUBLIC')}`
 
-const body = Deno.readTextFileSync('./src/assets/index.html').replaceAll('<!--captcha-->', captcha)
+const body = Deno.readTextFileSync('./src/assets/index.html').replaceAll('<!--turnstile-->', turnstile)
 
 export const index: Middleware = ({ response }) => (response.body = body);

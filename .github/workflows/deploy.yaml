@@ -42,8 +42,8 @@ jobs:
         docker build -t $IMAGE \
           --build-arg GITHUB=${{ secrets.GITHUB }} \
           --build-arg WEBHOOK=${{ secrets.WEBHOOK }} \
-          --build-arg CAPTCHA_PUBLIC=${{ secrets.CAPTCHA_PUBLIC }} \
-          --build-arg CAPTCHA_PRIVATE=${{ secrets.CAPTCHA_PRIVATE }} ./
+          --build-arg TURNSTILE_PUBLIC=${{ secrets.TURNSTILE_PUBLIC }} \
+          --build-arg TURNSTILE_PRIVATE=${{ secrets.TURNSTILE_PRIVATE }} ./
         docker tag $IMAGE $REPO:latest
         docker push $REPO:latest
 

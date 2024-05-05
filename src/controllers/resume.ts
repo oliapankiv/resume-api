@@ -1,22 +1,25 @@
 import { Middleware, Status } from 'oak'
 
 import { useResume } from '~/services/mod.ts'
-import { CaptchaResponse, Constants } from '~/types/mod.ts'
+import { Constants, TurnstileResponse } from '~/types/mod.ts'
 
-const captcha = `${Deno.env.get('CAPTCHA_PRIVATE')}`
+const turnstile = `${Deno.env.get('TURNSTILE_PRIVATE')}`
 
-const url = 'https://www.google.com/recaptcha/api/siteverify'
+const url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify'
 
-const validator: Middleware = async (ctx, next) => {
-   const form = await ctx.request.body({ type: 'form', limit: 2 * 1024 }).value
+const validator: Middleware = async (ctx: Parameters<Middleware>[0], next) => {
+   const form = await ctx.request.body.formData().catch(() => undefined)
+   const token = form?.get('token')
+
+   ctx.assert(token, Status.BadRequest)
 
    const body = new FormData()
-   body.append('secret', captcha)
-   body.append('response', `${form.get('token')}`)
+   body.append('secret', turnstile)
+   body.append('response', token)
 
-   const { success, score } = await fetch(url, { method: 'POST', body }).then(async (res) => (await res.json()) as CaptchaResponse)
+   const { success }: TurnstileResponse = await fetch(url, { method: 'POST', body }).then((res) => res.json())
 
-   if (!success || !score || score < 0.7) return ctx.throw(Status.Forbidden, 'detected suspicious activity')
+   ctx.assert(success, Status.Forbidden, 'detected suspicious activity')
 
    return next()
 }
