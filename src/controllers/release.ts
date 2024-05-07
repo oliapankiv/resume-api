@@ -5,7 +5,7 @@ import { useResume, useWebhook } from '~/services/mod.ts'
 const validator: Middleware = async (ctx, next) => {
   const { verify } = useWebhook()
 
-  const payload = await ctx.request.body({ type: 'json', limit: 64 * 1024 }).value
+  const payload = await ctx.request.body.json()
   if (!payload) return ctx.throw(Status.BadRequest, 'missing payload')
 
   if (payload.action !== 'released') return ctx.response.status = Status.OK
