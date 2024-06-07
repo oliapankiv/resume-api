@@ -29,10 +29,10 @@ ARG TURNSTILE_PRIVATE
 
 ENV LD_LIBRARY_PATH=/usr/local/lib PORT=${PORT} GITHUB=${GITHUB} WEBHOOK=${WEBHOOK} TURNSTILE_PUBLIC=${TURNSTILE_PUBLIC} TURNSTILE_PRIVATE=${TURNSTILE_PRIVATE}
 
-COPY --from=build /app/dist .
+COPY --from=cache --chown=root:root --chmod=755 /lib /lib
+COPY --from=cache --chown=root:root --chmod=755 /lib64 /lib64
+COPY --from=cache --chown=root:root --chmod=755 /usr/local/lib /usr/local/lib
 
-COPY --from=build --chown=root:root --chmod=755 /lib /lib
-COPY --from=build --chown=root:root --chmod=755 /lib64 /lib64
-COPY --from=build --chown=root:root --chmod=755 /usr/local/lib /usr/local/lib
+COPY --from=build /app/dist .
 
 CMD ./resume-api
