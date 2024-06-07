@@ -35,4 +35,4 @@ COPY --from=build --chown=root:root --chmod=755 /lib /lib
 COPY --from=build --chown=root:root --chmod=755 /lib64 /lib64
 COPY --from=build --chown=root:root --chmod=755 /usr/local/lib /usr/local/lib
 
-CMD /app/resume-api
+CMD ./resume-api
