@@ -2,7 +2,7 @@ FROM denoland/deno:alpine-1.44.0 as cache
 
 WORKDIR /app
 
-COPY deno.json map.json deno.lock deps.ts  .
+COPY deno.json map.json deps.ts  .
 
 RUN deno cache deps.ts
 
@@ -12,8 +12,8 @@ WORKDIR /app
 
 COPY src ./src
 COPY src/assets ./dist/src/assets
-COPY deno.json map.json deno.lock .
 COPY --from=cache /deno-dir /deno-dir
+COPY --from=cache /app/deno.json /app/map.json /app/deno.lock .
 
 RUN deno task build
 
