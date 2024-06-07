@@ -2,7 +2,7 @@ FROM denoland/deno:alpine-1.44.0 as cache
 
 WORKDIR /app
 
-COPY deno.json map.json deps.ts  .
+COPY deno.json map.json deps.ts .
 
 RUN deno cache deps.ts
 
