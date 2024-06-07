@@ -1,7 +1,6 @@
 {
   "imports": {
      "~/": "./src/",
-     "oak": "https://deno.land/x/oak@v16.0.0/mod.ts",
-     "crypto": "https://deno.land/std@0.182.0/crypto/mod.ts"
+     "oak": "https://deno.land/x/oak@v16.0.0/mod.ts"
   }
 }

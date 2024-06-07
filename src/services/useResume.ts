@@ -1,5 +1,3 @@
-import { crypto } from 'crypto'
-
 import { Resume, Release } from '~/types/mod.ts'
 
 const github = Deno.env.get('GITHUB')
