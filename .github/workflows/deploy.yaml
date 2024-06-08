@@ -19,6 +19,9 @@ jobs:
       contents: 'read'
       id-token: 'write'
 
+    env:
+      REPO: ${{ secrets.REGISTRY_URL }}/${{ vars.SERVICE }}
+
     steps:
     - name: Checkout 🛎️
       uses: actions/checkout@v4
@@ -37,9 +40,9 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         push: true
-        tags: ${{ vars.SERVICE }}:latest
-        cache-from: type=registry,ref=${{ vars.SERVICE }}:buildcache
-        cache-to: type=registry,ref=${{ vars.SERVICE }}:buildcache,mode=max
+        tags: $REPO:latest
+        cache-from: type=registry,ref=$REPO:buildcache
+        cache-to: type=registry,ref=$REPO:buildcache,mode=max
         build-args: |
           PORT=${{ vars.PORT }}
           GITHUB=${{ secrets.GITHUB }}
