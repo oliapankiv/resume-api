@@ -1,7 +1,4 @@
 {
-  "compilerOptions": {
-    "allowJs": false
-  },
   "fmt": {
     "options": {
       "lineWidth": 160,
@@ -15,6 +12,6 @@
   },
   "imports": {
     "~/": "./src/",
-    "oak": "https://deno.land/x/oak@v16.1.0/mod.ts"
+    "oak": "https://deno.land/x/oak@v17.1.4/mod.ts"
  }
 }
