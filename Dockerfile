@@ -1,4 +1,4 @@
-FROM denoland/deno:alpine-2.2.4 AS cache
+FROM denoland/deno:alpine-2.4.1 AS cache
 
 WORKDIR /app
 
@@ -6,7 +6,7 @@ COPY deno.json deps.ts .
 
 RUN deno cache deps.ts
 
-FROM denoland/deno:alpine-2.2.4 AS build
+FROM denoland/deno:alpine-2.4.1 AS build
 
 WORKDIR /app
 
