@@ -3,7 +3,7 @@ import { Resume, Release } from '~/types/mod.ts'
 const github = Deno.env.get('GITHUB')
 if (!github) throw new Error('no github token defined')
 
-const base = 'https://api.github.com/repos/dasph/resume-tex/releases'
+const base = 'https://api.github.com/repos/oliapankiv/resume-tex/releases'
 
 const accept = 'application/octet-stream'
 const authorization = `Bearer ${github}`
