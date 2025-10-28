@@ -1,6 +1,6 @@
 services:
-  resume-api:
-    image: ${REGISTRY_URL}/resume-api:latest
+  olha-resume-api:
+    image: ${REGISTRY_URL}/olha-resume-api:latest
     restart: unless-stopped
     networks:
       - nginx
