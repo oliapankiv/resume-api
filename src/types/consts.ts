@@ -1,3 +1,3 @@
 export enum Constants {
-  RESUME_FILE_NAME = 'andrew-nyzhnyk-resume.pdf'
+  RESUME_FILE_NAME = 'olha-pankiv-resume.pdf'
 }
